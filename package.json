@@ -1,0 +1,23 @@
+{
+  "name": "redis-mini",
+  "version": "1.0.0",
+  "description": "we will create redis from scratch using nodejs and typescript",
+  "main": "index.js",
+  "scripts": {
+    "start": "node --loader ts-node/esm src/index.ts",
+    "dev": "nodemon --watch src/**/*.ts --exec node --loader ts-node/esm src/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "@types/node": "^25.6.0",
+    "nodemon": "^3.1.14",
+    "ts-node": "^10.9.2",
+    "typescript": "^6.0.3"
+  },
+  "dependencies": {
+    "net": "^1.0.2"
+  }
+}
