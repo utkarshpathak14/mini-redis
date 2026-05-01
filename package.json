@@ -18,6 +18,7 @@
     "typescript": "^6.0.3"
   },
   "dependencies": {
-    "net": "^1.0.2"
+    "net": "^1.0.2",
+    "redis": "^5.12.1"
   }
 }
