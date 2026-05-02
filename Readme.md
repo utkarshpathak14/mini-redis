@@ -1,13 +1,16 @@
-we will create redis from scratch using nodejs and typescript
+You'll start by implementing the core building blocks of every Redis server:
 
-Raw Network Sockets
-lets create server using net modulee
+Binding to a TCP port and listening for connections
+Responding to basic commands like PING 
+Parsing the Redis Protocol (RESP) from client requests
+Handling multiple clients concurrently
+Implementing the SET and GET commands to store and retrieve data.
+At this stage, your Redis will already feel real, and you'll be able to interact with the official redis-cli.
 
-Memory Management & Data Structures
-The LRU Cache
-Concurrency & Threads
+As you progress, you'll implement advanced features like:
 
-
-execulte the aof file to restore the data in memory when the server starts
-execute vectordb saves vector and then we can use it to search for similar vectors
-using math to calculate the distance between vectors and find the most similar ones
+Redis replication
+RDB persistence
+Atomic transactions
+… and more
+At the end, you'll have a GitHub repo to show off.

@@ -1,26 +1,32 @@
 import * as net from "net";
 
 //new hashmap
-const db = new Map<string, string>();
+const db = new Map<string, any>();
 
 function parser(command:string):string[]{
-  const parts = command.split("\r\n"); // [*3, $3, SET, $4, name, $7, utkarsh]
+  const parts = command.split("\r\n");
   const result:string[] = [];
   for(let i=2 ; i<parts.length; i+=2){
-    result.push(parts[i]!) // ['SET', 'name', 'utkarsh']
+    result.push(parts[i]!) 
   }
   return result;
 }
+
+// const commandParser = (data: Buffer) => {
+//   return data
+//     .toString()
+//     .split("\r\n")
+//     .filter((c) => !c.startsWith("*") && !c.startsWith("$") && c !== "");
+// };
+
 
 
 const server = net.createServer((socket: net.Socket) => {
   console.log("a net client connected");
   let command = "";
 
-  //listen for data from this specific client
   socket.on("data", (data: Buffer) => {
     command += data.toString();
-    // console.log(`client id connected: ${id}`)
 
     if (command.includes("\n")) {
       let parts: string[] = [];
@@ -33,7 +39,18 @@ const server = net.createServer((socket: net.Socket) => {
 
       command = "";
  
-      const cmd = parts[0]?.toUpperCase();
+      const cmd = parts[0]!.toUpperCase();
+      console.log(cmd)
+
+      if (cmd === "PING") {
+        socket.write(`+PONG\r\n`);
+      } 
+      else if (cmd === "AUTH") {
+        socket.write(`+OK\r\n`); 
+      }
+      else if (cmd === "HELLO" || cmd === "INFO" || cmd === "COMMAND" || cmd === "DOCS") {
+        socket.write(`-ERR unknown command '${cmd}'\r\n`);
+      }
 
       if (cmd === "SET") {
         const key = parts[1];
@@ -76,7 +93,7 @@ const server = net.createServer((socket: net.Socket) => {
   });
 });
 
-const port = 6379;
+const port = 6000;
 server.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
 });
@@ -84,5 +101,6 @@ server.listen(port, () => {
 
 
 
-// const testCommand = "*3\r\n$3\r\nSET\r\n$4\r\nname\r\n$7\r\nutkarsh\r\n";
-// console.log(parser(testCommand));
+// // const testCommand = "*3\r\n$3\r\nSET\r\n$4\r\nname\r\n$7\r\nutkarsh\r\n";
+// // console.log(parser(testCommand));
+
