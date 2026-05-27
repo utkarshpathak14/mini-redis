@@ -5,6 +5,8 @@ import { handleSet } from "./set.js";
 import { handleGet } from "./get.js";
 import { handleDel } from "./del.js";
 import { formatError } from "../responses/formatter.js";
+import { handleMultiGet } from "./mget.js";
+import { handleMultiSet } from "./mset.js";
 
 export const handleCommand = (
   cmd: string,
@@ -28,6 +30,10 @@ export const handleCommand = (
     case "DEL":
       handleDel(parts, socket, db);
       break;
+    case "MGET":
+      handleMultiGet(parts, socket, db);
+    case "MSET":
+      handleMultiSet(parts, socket, db);
     case "HELLO":
     case "INFO":
     case "COMMAND":

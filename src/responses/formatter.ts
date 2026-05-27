@@ -19,3 +19,11 @@ export const formatBulkString = (text: string | null): string => {
   }
   return `$${text.length}\r\n${text}\r\n`;
 };
+
+export const formatArray = (items: (string | null)[]): string => {
+  let result = `*${items.length}\r\n`;
+  for (const item of items) {
+    result += formatBulkString(item);
+  }
+  return result;
+}
