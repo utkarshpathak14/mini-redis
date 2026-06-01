@@ -7,12 +7,14 @@ import { handleDel } from "./del.js";
 import { formatError } from "../responses/formatter.js";
 import { handleMultiGet } from "./mget.js";
 import { handleMultiSet } from "./mset.js";
+import type { StoredValue } from "../models/db.js";
+import { handleExpire } from "./exp.js";
 
 export const handleCommand = (
   cmd: string,
   parts: string[],
   socket: net.Socket,
-  db: Map<string, string>
+  db: Map<string, StoredValue>
 ): void => {
   switch (cmd) {
     case "PING":
@@ -32,8 +34,13 @@ export const handleCommand = (
       break;
     case "MGET":
       handleMultiGet(parts, socket, db);
+      break;
     case "MSET":
       handleMultiSet(parts, socket, db);
+      break;
+    case "EXPIRE":
+      handleExpire(parts, socket, db);
+      break;
     case "HELLO":
     case "INFO":
     case "COMMAND":

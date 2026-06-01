@@ -1,2 +1,8 @@
-//new hashmap
-export const db = new Map<string, string>();
+
+export type StoredValue = {
+    value:string,
+    expireAt?:number 
+}
+
+
+export const db = new Map<string, StoredValue>();

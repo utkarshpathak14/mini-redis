@@ -1,10 +1,11 @@
 import * as net from "net";
 import { formatSimpleString, formatError } from "../responses/formatter.js";
+import type { StoredValue } from "../models/db.js";
 
 export const handleSet = (
   parts: string[],
   socket: net.Socket,
-  db: Map<string, string>
+  db: Map<string, StoredValue>
 ): void => {
   const key = parts[1];
   const value = parts.slice(2).join(" ");
@@ -14,6 +15,6 @@ export const handleSet = (
     return;
   }
 
-  db.set(key, value);
+  db.set(key, { value });
   socket.write(formatSimpleString("OK"));
 };

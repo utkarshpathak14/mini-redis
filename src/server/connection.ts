@@ -2,8 +2,9 @@
 import * as net from "net";
 import { commandParser } from "../protocols/resp.js";
 import { handleCommand } from "../commands/registry.js";
+import type { StoredValue } from "../models/db.js";
 
-export const handleConnection = (socket: net.Socket, db: Map<string, string>): void => {
+export const handleConnection = (socket: net.Socket, db: Map<string, StoredValue>): void => {
   console.log("a net client connected");
   let command = "";
 

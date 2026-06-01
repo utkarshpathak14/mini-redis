@@ -1,10 +1,11 @@
 import * as net from "net";
 import { formatSimpleString, formatError } from "../responses/formatter.js";
+import type { StoredValue } from "../models/db.js";
 
 export const handleMultiSet = (
   parts: string[],
   socket: net.Socket,
-  db: Map<string, string>
+  db: Map<string, StoredValue>
 ): void => {
     if (parts.length < 3 || parts.length % 2 === 0) {
         socket.write(formatError("MSET command requires an odd number of arguments (command + pairs)"));
@@ -17,7 +18,7 @@ export const handleMultiSet = (
             socket.write(formatError("ERR syntax error or missing values"));
             return;
         }
-        db.set(key, value);
+        db.set(key, { value });
     }
     socket.write(formatSimpleString("OK"));
 };
