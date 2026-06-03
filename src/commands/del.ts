@@ -20,10 +20,7 @@ export const handleDel = (
 
 
 export const flushdb = (socket: net.Socket, db: Map<string, StoredValue>): void => {
-  if(db.size === 0) {
-    socket.write(formatSimpleString("OK"));
-    return;
-  }
+  if(db.size >0){
   db.clear();
-  socket.write(formatSimpleString("OK"));
+}  socket.write(formatSimpleString("OK"));
 };
