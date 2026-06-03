@@ -3,12 +3,13 @@ import { handlePing } from "./ping.js";
 import { handleAuth } from "./auth.js";
 import { handleSet } from "./set.js";
 import { handleGet } from "./get.js";
-import { handleDel } from "./del.js";
+import { flushdb, handleDel } from "./del.js";
 import { formatError } from "../responses/formatter.js";
 import { handleMultiGet } from "./mget.js";
 import { handleMultiSet } from "./mset.js";
 import type { StoredValue } from "../models/db.js";
 import { handleExpire } from "./exp.js";
+import { handleTTL } from "./ttl.js";
 
 export const handleCommand = (
   cmd: string,
@@ -40,6 +41,12 @@ export const handleCommand = (
       break;
     case "EXPIRE":
       handleExpire(parts, socket, db);
+      break;
+    case "TTL":
+     handleTTL(parts, socket, db);
+     break;
+    case "FLUSHDB":
+      flushdb(socket, db);
       break;
     case "HELLO":
     case "INFO":

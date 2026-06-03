@@ -1,5 +1,5 @@
 import * as net from "net";
-import { formatInteger, formatError } from "../responses/formatter.js";
+import { formatInteger, formatError, formatSimpleString } from "../responses/formatter.js";
 import type { StoredValue } from "../models/db.js";
 
 export const handleDel = (
@@ -16,4 +16,14 @@ export const handleDel = (
 
   const wasDeleted = db.delete(key);
   socket.write(formatInteger(wasDeleted ? 1 : 0));
+};
+
+
+export const flushdb = (socket: net.Socket, db: Map<string, StoredValue>): void => {
+  if(db.size === 0) {
+    socket.write(formatSimpleString("OK"));
+    return;
+  }
+  db.clear();
+  socket.write(formatSimpleString("OK"));
 };
