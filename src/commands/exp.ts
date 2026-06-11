@@ -1,6 +1,8 @@
 import * as net from "net";
 import { formatSimpleString, formatError, formatInteger } from "../responses/formatter.js";
 import type { StoredValue } from "../models/db.js";
+import { appendToAOF } from "../utils/aof.js";
+
 
 export const handleExpire = (
   parts: string[],
@@ -21,8 +23,7 @@ export const handleExpire = (
     const expireAt = Date.now() + (seconds * 1000);
     db.set(key,{ ...storedValue, expireAt });
     socket.write(formatInteger(1));
+    appendToAOF("EXPIRE", key, seconds.toString());
+    
     return;
-  
 };
-
-//key -> find -> if exsist -> set expire time

@@ -1,6 +1,8 @@
 import * as net from "net";
 import { formatSimpleString, formatError } from "../responses/formatter.js";
 import type { StoredValue } from "../models/db.js";
+import { appendToAOF } from "../utils/aof.js";
+
 
 export const handleSet = (
   parts: string[],
@@ -17,4 +19,5 @@ export const handleSet = (
 
   db.set(key, { value });
   socket.write(formatSimpleString("OK"));
+  appendToAOF("SET", key, value);
 };
